@@ -24,7 +24,7 @@ Sistema web moderno para gerenciamento de orçamentos de serviços elétricos, d
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/mp-eletrica.git
+git clone https://github.com/viiniinhoo/mp-eletrica.git
 cd mp-eletrica
 ```
 
