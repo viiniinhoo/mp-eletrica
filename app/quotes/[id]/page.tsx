@@ -1,17 +1,16 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function QuoteDetail() {
+    const navigate = useNavigate();
+    const { id } = useParams();
     return (
         <div className="min-h-screen bg-background-light text-text-primary px-0 font-body antialiased flex flex-col max-w-lg mx-auto w-full">
             <header className="sticky top-0 z-30 h-16 flex items-center justify-between px-4 shadow-sm bg-primary">
                 <div className="flex items-center gap-3">
-                    <Link href="/quotes" className="flex items-center justify-center p-2 -ml-2 hover:bg-white/10 rounded text-white">
+                    <Link to="/quotes" className="flex items-center justify-center p-2 -ml-2 hover:bg-white/10 rounded text-white">
                         <span className="material-symbols-outlined">arrow_back</span>
                     </Link>
-                    <h1 className="font-display font-medium text-xl tracking-wide text-white uppercase">ORÇAMENTO #2304</h1>
+                    <h1 className="font-display font-medium text-xl tracking-wide text-white uppercase">ORÇAMENTO #{id}</h1>
                 </div>
                 <button className="p-2 hover:bg-white/10 rounded text-white">
                     <span className="material-symbols-outlined">more_vert</span>

@@ -1,12 +1,10 @@
-"use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuote } from "@/contexts/QuoteContext";
 import { QuoteItem } from "@/types/quote";
 
 export default function NewQuoteStep2() {
-    const router = useRouter();
+    const navigate = useNavigate();
     const { items, removeItem, updateQuantity, totalValue } = useQuote();
 
     const subtotalMaterials = items
@@ -32,11 +30,11 @@ export default function NewQuoteStep2() {
         <div className="min-h-screen bg-background-light text-text-primary flex flex-col max-w-lg mx-auto w-full border-x border-border-color pb-32">
             <header className="sticky top-0 z-50 bg-primary text-white shadow-md">
                 <div className="flex items-center p-4 justify-between w-full">
-                    <button onClick={() => router.back()} className="text-white flex size-10 shrink-0 items-center justify-start">
+                    <button onClick={() => navigate(-1)} className="text-white flex size-10 shrink-0 items-center justify-start">
                         <span className="material-symbols-outlined text-2xl">arrow_back</span>
                     </button>
                     <h1 className="text-white text-base font-black tracking-widest uppercase flex-1 text-center font-heading">Novo Orçamento</h1>
-                    <button onClick={() => router.push("/quotes")} className="flex w-14 items-center justify-end">
+                    <button onClick={() => navigate("/quotes")} className="flex w-14 items-center justify-end">
                         <span className="hover:text-red-400 text-[10px] font-black tracking-widest transition-colors text-white/80">CANCELAR</span>
                     </button>
                 </div>
@@ -81,7 +79,7 @@ export default function NewQuoteStep2() {
                         )}
 
                         <button
-                            onClick={() => router.push('/catalog')}
+                            onClick={() => navigate('/catalog')}
                             className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 bg-white/50 rounded-none p-4 text-text-muted hover:border-primary hover:text-primary transition-all group"
                         >
                             <span className="material-symbols-outlined group-hover:scale-110 transition-transform">add_circle</span>
@@ -108,7 +106,7 @@ export default function NewQuoteStep2() {
                         </div>
                     </div>
                     <button
-                        onClick={() => router.push("/quotes/new/step-3")}
+                        onClick={() => navigate("/quotes/new/step-3")}
                         className="w-full bg-safety-yellow hover:bg-yellow-400 text-primary flex items-center justify-center gap-3 h-14 rounded-none font-black text-sm uppercase tracking-widest shadow-lg active:scale-[0.98] transition-all border-b-4 border-yellow-600 active:border-b-0"
                     >
                         <span className="material-symbols-outlined font-bold">visibility</span>

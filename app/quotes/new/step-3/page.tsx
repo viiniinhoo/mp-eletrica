@@ -1,11 +1,9 @@
-"use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { useQuote } from "@/contexts/QuoteContext";
 
 export default function NewQuoteStep3() {
-    const router = useRouter();
+    const navigate = useNavigate();
     const { clientData, items, totalValue, updateQuantity, removeItem } = useQuote();
 
     const subtotalMaterials = items
@@ -33,7 +31,7 @@ export default function NewQuoteStep3() {
                 <div className="flex flex-col gap-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <button onClick={() => router.back()} className="material-symbols-outlined cursor-pointer text-white">arrow_back</button>
+                            <button onClick={() => navigate(-1)} className="material-symbols-outlined cursor-pointer text-white">arrow_back</button>
                             <h1 className="font-heading text-xl font-bold tracking-widest uppercase">REVISÃO DO ORÇAMENTO</h1>
                         </div>
                         <div className="text-[10px] font-mono font-black opacity-80 uppercase">Passo 3 de 3</div>
@@ -59,7 +57,7 @@ export default function NewQuoteStep3() {
                             <h2 className="font-heading text-lg font-bold text-primary uppercase tracking-tight">DADOS DO CLIENTE</h2>
                         </div>
                         <button
-                            onClick={() => router.push('/quotes/new/step-1')}
+                            onClick={() => navigate('/quotes/new/step-1')}
                             className="flex items-center gap-1 text-primary hover:bg-primary/10 px-2 py-1 transition-colors text-xs font-black uppercase"
                         >
                             <span className="material-symbols-outlined text-sm">edit</span>
@@ -91,7 +89,7 @@ export default function NewQuoteStep3() {
                             <h2 className="font-heading text-lg font-bold text-primary uppercase tracking-tight">ITENS DO ORÇAMENTO</h2>
                         </div>
                         <button
-                            onClick={() => router.push('/catalog')}
+                            onClick={() => navigate('/catalog')}
                             className="flex items-center gap-1 text-primary hover:bg-primary/10 px-2 py-1 transition-colors text-xs font-black uppercase"
                         >
                             <span className="material-symbols-outlined text-sm">add</span>
@@ -163,7 +161,7 @@ export default function NewQuoteStep3() {
 
             <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-border-color p-4 z-50 max-w-lg mx-auto">
                 <button
-                    onClick={() => router.push("/quotes")}
+                    onClick={() => navigate("/quotes")}
                     className="w-full bg-accent hover:bg-yellow-400 text-primary font-heading text-lg font-bold py-4 px-6 rounded-none shadow-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-all border-b-4 border-yellow-600 active:border-b-0 uppercase tracking-widest"
                 >
                     <span className="material-symbols-outlined font-black">picture_as_pdf</span>

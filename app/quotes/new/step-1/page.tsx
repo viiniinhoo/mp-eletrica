@@ -1,13 +1,11 @@
-"use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuote } from "@/contexts/QuoteContext";
 import { useState } from "react";
 import { ClientType } from "@/types/quote";
 
 export default function NewQuoteStep1() {
-    const router = useRouter();
+    const navigate = useNavigate();
     const { updateClientData, clientData } = useQuote();
 
     // Local state for form inputs, defaulting to context data if available
@@ -31,14 +29,14 @@ export default function NewQuoteStep1() {
             locationType
         });
 
-        router.push("/quotes/new/step-2");
+        navigate("/quotes/new/step-2");
     };
 
     return (
         <div className="min-h-screen bg-background-light text-text-primary flex flex-col max-w-lg mx-auto w-full border-x border-border-color">
             <header className="sticky top-0 z-50 bg-primary text-white shadow-md">
                 <div className="flex items-center p-4">
-                    <Link href="/quotes" className="flex items-center justify-center p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <Link to="/quotes" className="flex items-center justify-center p-2 hover:bg-white/10 rounded-full transition-colors">
                         <span className="material-symbols-outlined">arrow_back</span>
                     </Link>
                     <h1 className="ml-4 text-xl font-bold font-heading tracking-widest uppercase">Novo Orçamento</h1>

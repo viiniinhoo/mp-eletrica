@@ -1,13 +1,10 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { BottomNav, FloatingActionButton } from "@/components/Navigation";
-import Link from "next/link";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { CatalogItem as CatalogItemComponent } from "@/components/catalog/CatalogItem";
 
 import { useQuote } from "@/contexts/QuoteContext";
-import { useRouter } from "next/navigation";
 import { CatalogItem, CatalogCategory, UnitOfMeasure } from "@/types/catalog";
 import { QuoteItem } from "@/types/quote";
 import { useCatalog } from "@/hooks/useCatalog";
@@ -15,7 +12,7 @@ import { useCatalog } from "@/hooks/useCatalog";
 export default function CatalogList() {
     const [activeTab, setActiveTab] = useState("materials");
     const [searchTerm, setSearchTerm] = useState("");
-    const router = useRouter();
+    const navigate = useNavigate();
     const { addItem } = useQuote();
     const { items: catalogItems, loading } = useCatalog();
 
@@ -43,7 +40,7 @@ export default function CatalogList() {
         addItem({ catalogItem: item, quantity: 1 });
         // Optional: Show toast or feedback
         // alert(`Item "${item.name}" adicionado ao orçamento!`);
-        router.push('/quotes/new/step-2');
+        navigate('/quotes/new/step-2');
     };
 
     return (
@@ -51,7 +48,7 @@ export default function CatalogList() {
             <header className="sticky top-0 z-20 bg-primary shadow-lg">
                 <div className="flex items-center justify-between px-4 py-4 text-white">
                     <div className="flex items-center gap-3">
-                        <Link href="/" className="flex items-center justify-center p-1 hover:bg-white/10 rounded">
+                        <Link to="/" className="flex items-center justify-center p-1 hover:bg-white/10 rounded">
                             <span className="material-symbols-outlined text-white" style={{ fontSize: "24px" }}>arrow_back</span>
                         </Link>
                         <h1 className="font-display font-medium text-xl tracking-wide uppercase">Catálogo</h1>
@@ -139,7 +136,7 @@ export default function CatalogList() {
             </main>
 
 
-            <FloatingActionButton href="/catalog/new" />
+            <FloatingActionButton to="/catalog/new" />
             <BottomNav />
         </div >
     );

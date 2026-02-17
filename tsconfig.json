@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "types": [
+      "node",
+      "vite/client"
+    ],
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [

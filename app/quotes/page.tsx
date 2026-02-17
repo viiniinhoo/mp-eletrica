@@ -1,15 +1,12 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { BottomNav, FloatingActionButton } from "@/components/Navigation";
-import Link from "next/link";
 import { QuoteCard } from "@/components/quotes/QuoteCard";
 import { useQuotes } from "@/hooks/useQuotes";
 import { useState, useMemo } from "react";
 import type { QuoteStatus } from "@/types/quote";
 
 export default function QuotesList() {
-    const { quotes, loading } = useQuotes();
+    const { quotes, loading, deleteQuote } = useQuotes();
     const [searchTerm, setSearchTerm] = useState("");
     const [activeFilter, setActiveFilter] = useState<QuoteStatus | "all">("all");
 
@@ -123,7 +120,7 @@ export default function QuotesList() {
                         </p>
                         {!searchTerm && activeFilter === "all" && (
                             <Link
-                                href="/quotes/new/step-1"
+                                to="/quotes/new/step-1"
                                 className="inline-block mt-4 bg-primary text-white px-6 py-2 font-bold uppercase text-sm hover:bg-primary-dark transition-colors"
                             >
                                 Criar Orçamento

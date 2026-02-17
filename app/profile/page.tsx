@@ -1,14 +1,14 @@
-"use client";
+
 
 import { motion } from "framer-motion";
 import { BottomNav } from "@/components/Navigation";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage() {
     return (
         <div className="min-h-screen bg-background-light text-text-primary flex flex-col pb-24 max-w-lg mx-auto w-full border-x border-border-color shadow-xl">
             <header className="sticky top-0 z-10 flex items-center bg-white border-b border-gray-200 px-4 py-4 justify-between">
-                <Link href="/" className="text-primary flex size-10 shrink-0 items-center cursor-pointer">
+                <Link to="/" className="text-primary flex size-10 shrink-0 items-center cursor-pointer">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </Link>
                 <h1 className="text-primary text-sm font-bold leading-tight tracking-widest uppercase flex-1 text-center font-heading">Ajustes e Perfil</h1>
@@ -40,7 +40,7 @@ export default function ProfilePage() {
 
                 <ProfileGroup title="Negócios">
                     <ProfileLink icon="business" label="Dados da Empresa" />
-                    <ProfileLink icon="inventory_2" label="Itens de Serviço (Catálogo)" href="/catalog" />
+                    <ProfileLink icon="inventory_2" label="Itens de Serviço (Catálogo)" to="/catalog" />
                 </ProfileGroup>
 
                 <ProfileGroup title="Preferências">
@@ -87,7 +87,7 @@ function ProfileGroup({ title, children }: any) {
 
 function ProfileLink({ icon, label, sublabel, href = "#" }: any) {
     return (
-        <Link href={href} className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0">
+        <Link to={href} className="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0">
             <span className="material-symbols-outlined text-primary">{icon}</span>
             <div className="flex-1">
                 <p className="font-bold text-gray-700 text-sm uppercase tracking-tight">{label}</p>

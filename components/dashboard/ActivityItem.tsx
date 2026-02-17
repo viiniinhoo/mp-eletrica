@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 interface ActivityItemProps {
     client: string;
@@ -10,7 +10,7 @@ interface ActivityItemProps {
 
 export function ActivityItem({ client, id, status, value, date }: ActivityItemProps) {
     return (
-        <Link href={`/quotes/${id.replace("#", "")}`} className="flex items-center justify-between p-3 bg-white border border-border-color shadow-sm hover:border-primary/30 transition-all group active:scale-[0.99]">
+        <Link to={`/quotes/${id.replace("#", "")}`} className="flex items-center justify-between p-3 bg-white border border-border-color shadow-sm hover:border-primary/30 transition-all group active:scale-[0.99]">
             <div className="flex items-center gap-3">
                 <div className="h-10 w-10 bg-background-light flex items-center justify-center border border-border-color group-hover:border-primary/20 transition-colors">
                     <span className="material-symbols-outlined text-text-muted group-hover:text-primary transition-colors">description</span>

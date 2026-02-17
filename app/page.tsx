@@ -1,10 +1,8 @@
-"use client";
-
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { BottomNav, FloatingActionButton } from "@/components/Navigation";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { ActivityItem } from "@/components/dashboard/ActivityItem";
-import Link from "next/link";
 import { useQuotes } from "@/hooks/useQuotes";
 import { useMemo } from "react";
 
@@ -105,7 +103,7 @@ export default function Dashboard() {
                         </div>
                         <p className="text-gray-300 text-xs font-mono uppercase tracking-wider">Painel de Controle v2.1</p>
                     </div>
-                    <Link href="/profile" className="relative group cursor-pointer border border-white/20 p-0.5">
+                    <Link to="/profile" className="relative group cursor-pointer border border-white/20 p-0.5">
                         <div className="h-10 w-10 bg-white/10 flex items-center justify-center text-white overflow-hidden">
                             <img
                                 alt="Profile"
@@ -175,7 +173,7 @@ export default function Dashboard() {
                 {/* Recent Activity */}
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-text-primary font-heading text-lg font-medium tracking-wide uppercase">Atividade Recente</h3>
-                    <Link href="/quotes" className="text-primary text-xs font-bold hover:underline">Ver Todos</Link>
+                    <Link to="/quotes" className="text-primary text-xs font-bold hover:underline">Ver Todos</Link>
                 </div>
 
                 {loading ? (

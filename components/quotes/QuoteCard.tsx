@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 interface QuoteCardProps {
     id: string;
@@ -23,7 +23,7 @@ export function QuoteCard({ id, client, desc, value, date, status, color, cancel
     const rawColor = color.replace('text-', '').replace('bg-', '').replace('border-', '');
 
     return (
-        <Link href={`/quotes/${id.replace('#', '')}`} className={`group bg-surface border-l-4 rounded-none shadow-card p-4 relative active:scale-[0.99] transition-transform duration-100 cursor-pointer border border-gray-200 block`} style={{ borderLeftColor: `var(--${rawColor}, ${color})` }}>
+        <Link to={`/quotes/${id.replace('#', '')}`} className={`group bg-surface border-l-4 rounded-none shadow-card p-4 relative active:scale-[0.99] transition-transform duration-100 cursor-pointer border border-gray-200 block`} style={{ borderLeftColor: `var(--${rawColor}, ${color})` }}>
             <div className="flex justify-between items-start mb-2">
                 <span className="font-mono text-primary font-bold text-sm bg-gray-100 px-2 py-0.5 rounded-none">{id}</span>
                 <span className="text-xs text-text-muted font-medium uppercase tracking-wide">{date}</span>

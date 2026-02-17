@@ -1,10 +1,8 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, useLocation } from "react-router-dom";
 
 export function BottomNav() {
-    const pathname = usePathname();
+    const location = useLocation();
+    const pathname = location.pathname;
 
     const navItems = [
         { label: "Início", icon: "home", href: "/" },
@@ -18,7 +16,7 @@ export function BottomNav() {
             {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
-                    <Link key={item.href} href={item.href} className={`flex flex-col items-center justify-center ${isActive ? "text-primary" : "text-text-muted"} group`}>
+                    <Link key={item.href} to={item.href} className={`flex flex-col items-center justify-center ${isActive ? "text-primary" : "text-text-muted"} group`}>
                         <div className={`flex h-8 items-center justify-center ${isActive ? "" : "group-hover:text-primary"} transition-colors`}>
                             <span className={`material-symbols-outlined text-2xl ${isActive ? "filled" : ""}`}>{item.icon}</span>
                         </div>
@@ -30,9 +28,9 @@ export function BottomNav() {
     );
 }
 
-export function FloatingActionButton({ href = "/quotes/new/step-1" }: { href?: string }) {
+export function FloatingActionButton({ to = "/quotes/new/step-1" }: { to?: string }) {
     return (
-        <Link href={href} className="fixed bottom-24 right-4 h-14 w-14 bg-accent rounded-full shadow-fab flex items-center justify-center text-primary z-20 hover:scale-105 active:scale-95 transition-transform border-2 border-primary/10">
+        <Link to={to} className="fixed bottom-24 right-4 h-14 w-14 bg-accent rounded-full shadow-fab flex items-center justify-center text-primary z-20 hover:scale-105 active:scale-95 transition-transform border-2 border-primary/10">
             <span className="material-symbols-outlined text-3xl font-bold">add</span>
         </Link>
     );

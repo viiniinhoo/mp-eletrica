@@ -1,18 +1,16 @@
-"use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 export default function NewCatalogItem() {
-    const router = useRouter();
+    const navigate = useNavigate();
     const [type, setType] = useState("material");
 
     return (
         <div className="min-h-screen bg-white text-text-primary flex flex-col max-w-lg mx-auto w-full border-x border-border-color">
             <header className="bg-primary flex items-center px-4 py-5 shadow-lg sticky top-0 z-50">
-                <button onClick={() => router.back()} className="text-white flex size-10 shrink-0 items-center justify-center hover:bg-white/10 rounded-full transition-colors">
+                <button onClick={() => navigate(-1)} className="text-white flex size-10 shrink-0 items-center justify-center hover:bg-white/10 rounded-full transition-colors">
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
                 <h1 className="text-white text-xl font-bold tracking-[0.2em] flex-1 text-center font-heading uppercase pr-10">
@@ -97,7 +95,7 @@ export default function NewCatalogItem() {
 
             <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/95 border-t border-border-color z-[60] max-w-lg mx-auto">
                 <button
-                    onClick={() => router.push("/catalog")}
+                    onClick={() => navigate("/catalog")}
                     className="w-full h-16 bg-safety-yellow hover:bg-yellow-400 flex items-center justify-center gap-2 rounded-none shadow-lg active:scale-[0.98] transition-all border-b-4 border-yellow-600 active:border-b-0"
                 >
                     <span className="material-symbols-outlined text-primary font-black">save</span>
