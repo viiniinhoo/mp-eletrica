@@ -1,10 +1,14 @@
 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuote } from "@/contexts/QuoteContext";
+import { useQuotes } from "@/hooks/useQuotes";
 
 export default function NewQuoteStep3() {
     const navigate = useNavigate();
-    const { clientData, items, totalValue, updateQuantity, removeItem } = useQuote();
+    const { clientData, items, totalValue, updateQuantity, removeItem, clearQuote } = useQuote();
+    const { createQuote } = useQuotes();
+    const [isSaving, setIsSaving] = useState(false);
 
     const subtotalMaterials = items
         .filter(i => i.catalogItem.category !== 'servicos')
@@ -22,6 +26,30 @@ export default function NewQuoteStep3() {
             }
         } else {
             updateQuantity(id, newQty);
+        }
+    };
+
+    const handleFinalize = async () => {
+        if (!clientData || items.length === 0) {
+            alert("Erro: Dados do cliente ou itens ausentes.");
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            const result = await createQuote(clientData, items);
+            if (result.success) {
+                // Notificar sucesso (opcional)
+                clearQuote();
+                navigate("/quotes");
+            } else {
+                alert(`Erro ao salvar orçamento: ${result.error}`);
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erro inesperado ao salvar orçamento.");
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -161,11 +189,14 @@ export default function NewQuoteStep3() {
 
             <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-border-color p-4 z-50 max-w-lg mx-auto">
                 <button
-                    onClick={() => navigate("/quotes")}
-                    className="w-full bg-accent hover:bg-yellow-400 text-primary font-heading text-lg font-bold py-4 px-6 rounded-none shadow-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-all border-b-4 border-yellow-600 active:border-b-0 uppercase tracking-widest"
+                    onClick={handleFinalize}
+                    disabled={isSaving}
+                    className="w-full bg-accent hover:bg-yellow-400 text-primary font-heading text-lg font-bold py-4 px-6 rounded-none shadow-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-all border-b-4 border-yellow-600 active:border-b-0 uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <span className="material-symbols-outlined font-black">picture_as_pdf</span>
-                    FINALIZAR E GERAR PDF
+                    <span className="material-symbols-outlined font-black">
+                        {isSaving ? "sync" : "picture_as_pdf"}
+                    </span>
+                    {isSaving ? "SALVANDO..." : "FINALIZAR E SALVAR"}
                 </button>
             </footer>
         </div>
