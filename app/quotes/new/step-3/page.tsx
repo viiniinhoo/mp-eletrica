@@ -36,10 +36,11 @@ export default function NewQuoteStep3() {
         }
 
         setIsSaving(true);
+
         try {
             const result = await createQuote(clientData, items);
+
             if (result.success) {
-                // Notificar sucesso (opcional)
                 clearQuote();
                 navigate("/quotes");
             } else {
@@ -117,7 +118,7 @@ export default function NewQuoteStep3() {
                             <h2 className="font-heading text-lg font-bold text-primary uppercase tracking-tight">ITENS DO ORÇAMENTO</h2>
                         </div>
                         <button
-                            onClick={() => navigate('/catalog')}
+                            onClick={() => navigate('/catalog', { state: { fromQuote: true } })}
                             className="flex items-center gap-1 text-primary hover:bg-primary/10 px-2 py-1 transition-colors text-xs font-black uppercase"
                         >
                             <span className="material-symbols-outlined text-sm">add</span>

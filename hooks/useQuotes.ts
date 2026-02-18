@@ -9,7 +9,7 @@
  * - Fetch quote details with items
  */
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase, handleSupabaseError } from '@/lib/supabase';
 import type { Quote, QuoteItem, ClientData, QuoteStatus } from '@/types/quote';
 
@@ -23,7 +23,7 @@ export function useQuotes() {
     const [error, setError] = useState<string | null>(null);
 
     // Fetch all quotes
-    const fetchQuotes = async () => {
+    const fetchQuotes = React.useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
@@ -57,7 +57,7 @@ export function useQuotes() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     // Create a new quote
     const createQuote = async (
@@ -65,7 +65,12 @@ export function useQuotes() {
         items: QuoteItem[]
     ): Promise<{ success: boolean; quoteId?: string; error?: string }> => {
         try {
+            console.log('--- INICIANDO SALVAMENTO ---');
+            console.log('Dados do Cliente:', clientData);
+            console.log('Itens:', items);
+
             // 1. Check if client exists or create new one
+            console.log('1. Verificando/Criando cliente...');
             const { data: existingClient } = await supabase
                 .from('clients')
                 .select('id')
@@ -75,9 +80,10 @@ export function useQuotes() {
             let clientId: string;
 
             if (existingClient) {
+                console.log('Cliente encontrado ID:', existingClient.id);
                 clientId = existingClient.id;
             } else {
-                // Create new client
+                console.log('Criando novo cliente...');
                 const { data: newClient, error: clientError } = await supabase
                     .from('clients')
                     .insert({
@@ -89,11 +95,15 @@ export function useQuotes() {
                     .select('id')
                     .single();
 
-                if (clientError) throw clientError;
+                if (clientError) {
+                    console.error('❌ Erro ao criar cliente:', clientError);
+                    throw clientError;
+                }
                 clientId = newClient.id;
             }
 
             // 2. Create quote
+            console.log('2. Criando orçamento para cliente:', clientId);
             const { data: newQuote, error: quoteError } = await supabase
                 .from('quotes')
                 .insert({
@@ -104,9 +114,14 @@ export function useQuotes() {
                 .select('id, quote_number')
                 .single();
 
-            if (quoteError) throw quoteError;
+            if (quoteError) {
+                console.error('❌ Erro ao criar orçamento:', quoteError);
+                throw quoteError;
+            }
+            console.log('Orçamento criado. Número:', newQuote.quote_number);
 
             // 3. Add quote items
+            console.log('3. Adicionando itens ao orçamento ID:', newQuote.id);
             const quoteItems = items.map(item => ({
                 quote_id: newQuote.id,
                 catalog_item_id: item.catalogItem.id,
@@ -118,8 +133,12 @@ export function useQuotes() {
                 .from('quote_items')
                 .insert(quoteItems);
 
-            if (itemsError) throw itemsError;
+            if (itemsError) {
+                console.error('❌ Erro ao adicionar itens:', itemsError);
+                throw itemsError;
+            }
 
+            console.log('--- SALVAMENTO CONCLUÍDO COM SUCESSO ---');
             // Refresh quotes list
             await fetchQuotes();
 
@@ -128,6 +147,7 @@ export function useQuotes() {
                 quoteId: newQuote.quote_number,
             };
         } catch (err) {
+            console.error('--- FALHA NO SALVAMENTO ---', err);
             return {
                 success: false,
                 error: handleSupabaseError(err),
@@ -161,7 +181,7 @@ export function useQuotes() {
     };
 
     // Fetch quote details with items
-    const fetchQuoteDetails = async (
+    const fetchQuoteDetails = React.useCallback(async (
         quoteNumber: string
     ): Promise<QuoteWithItems | null> => {
         try {
@@ -213,7 +233,7 @@ export function useQuotes() {
             console.error('Error fetching quote details:', err);
             return null;
         }
-    };
+    }, []);
 
     // Delete quote
     const deleteQuote = async (

@@ -79,7 +79,7 @@ export default function NewQuoteStep2() {
                         )}
 
                         <button
-                            onClick={() => navigate('/catalog')}
+                            onClick={() => navigate('/catalog', { state: { fromQuote: true } })}
                             className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 bg-white/50 rounded-none p-4 text-text-muted hover:border-primary hover:text-primary transition-all group"
                         >
                             <span className="material-symbols-outlined group-hover:scale-110 transition-transform">add_circle</span>
